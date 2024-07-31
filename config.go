@@ -1,4 +1,4 @@
-package gohelpers
+package gofn
 
 import (
 	"encoding/json"
