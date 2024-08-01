@@ -1,4 +1,4 @@
-package gofn
+package config
 
 import (
 	"encoding/json"
