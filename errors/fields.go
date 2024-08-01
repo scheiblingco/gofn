@@ -1,4 +1,4 @@
-package main
+package errors
 
 type InvalidFieldError string
 type MissingValueError string
