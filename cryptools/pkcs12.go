@@ -1,4 +1,4 @@
-package crypto
+package cryptools
 
 import (
 	"crypto/rsa"
@@ -6,7 +6,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 
-	"github.com/scheiblingco/gofn/errors"
+	"github.com/scheiblingco/gofn/errtools"
 	"software.sslmate.com/src/go-pkcs12"
 )
 
@@ -18,7 +18,7 @@ func X509FromPkcs12(data []byte, password string) (*tls.Certificate, error) {
 
 	priv, ok := privkey.(*rsa.PrivateKey)
 	if !ok {
-		return nil, errors.InvalidFieldError("private key - expected RSA private key type")
+		return nil, errtools.InvalidFieldError("private key - expected RSA private key type")
 	}
 
 	ppriv, err := x509.MarshalPKCS8PrivateKey(priv)

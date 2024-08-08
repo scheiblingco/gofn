@@ -1,4 +1,5 @@
-package crypto
+// The cryptools package contains some commonly used cryptographic functions
+package cryptools
 
 import "crypto/tls"
 

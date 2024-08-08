@@ -1,11 +1,11 @@
-package crypto_test
+package cryptools_test
 
 import (
 	"fmt"
 	"os"
 	"testing"
 
-	"github.com/scheiblingco/gofn/crypto"
+	"github.com/scheiblingco/gofn/cryptools"
 )
 
 func TestLoadPfx(t *testing.T) {
@@ -14,7 +14,7 @@ func TestLoadPfx(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	cert, err := crypto.X509FromPkcs12(data, "qwerty123")
+	cert, err := cryptools.X509FromPkcs12(data, "qwerty123")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,7 +28,7 @@ func TestLoadP12(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	cert, err := crypto.X509FromPkcs12(data, "qwerty123")
+	cert, err := cryptools.X509FromPkcs12(data, "qwerty123")
 	if err != nil {
 		t.Fatal(err)
 	}
