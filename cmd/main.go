@@ -2,46 +2,31 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/scheiblingco/gofn/cfgtools"
-	"github.com/scheiblingco/gofn/tsqltools"
 )
 
-type Config struct {
-	SqlServer string `json:"sql_server"`
-}
-
-type TestStruct struct {
-	ValA string  `json:"val_a"`
-	ValB int     `json:"val_b"`
-	ValC bool    `json:"val_c"`
-	ValD float32 `json:"val_d"`
-	ValE float64 `json:"val_e"`
-}
-
-var TestMap = map[string]interface{}{
-	"ValA": "test",
-	"ValB": 123,
-	"ValC": true,
-	"ValD": 1.23,
-	"ValE": 1.23,
-}
-
-type TestDbStruct struct {
-	CreatedName string `json:"CreatedName"`
-	CreatedDate string `json:"CreatedDate"`
-}
-
+// case "int", "int32", "int64", "uint", "uint32", "uint64", "float32", "float64", "uint8", "uint16", "uintptr":
 func main() {
-	cfg := Config{}
-	cfgtools.LoadJsonConfig("config.json", &cfg)
 
-	sqlq := "SELECT TOP 100 [CreatedName], [CreatedDate] FROM [EXT-HALDOR]..[TEDToAzureGuids]"
+	// client := webtools.
+	// 	NewRestRequest("https://api.github.com").
+	// 	WithAuthorization(&webtools.BasicAuth{
+	// 		Username: "user",
+	// 		Password: "pass",
+	// 	},
+	// 	)
 
-	resv := []TestDbStruct{}
+	// x := []interface{}{}
 
-	x := tsqltools.QueryMssqlStruct(cfg.SqlServer, sqlq, map[string]interface{}{}, &resv)
+	// type AliType int
 
-	fmt.Println(x)
+	// var ival int = 123
+	// var aval AliType = 123
 
+	// fmt.Println(structtools.IsNumber(ival))
+	// fmt.Println(structtools.IsNumber(aval))
+
+	// fmt.Println(reflect.TypeOf(aval).Kind())
+	// fmt.Println(reflect.TypeOf(ival).Kind())
+
+	fmt.Println("Hold")
 }

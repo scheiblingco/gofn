@@ -6,7 +6,7 @@ import (
 	"reflect"
 
 	_ "github.com/microsoft/go-mssqldb"
-	"github.com/scheiblingco/gofn/structtools"
+	"github.com/scheiblingco/gofn/typetools"
 )
 
 func QueryMssql(connectionstring, query string, params map[string]interface{}) ([]map[string]interface{}, error) {
@@ -122,7 +122,7 @@ func QueryMssqlStruct(connectionstring, query string, params map[string]interfac
 
 		for i, colName := range cols {
 			val := columnPointers[i].(*interface{})
-			if err := structtools.SetField(single, colName, *val); err != nil {
+			if err := typetools.SetField(single, colName, *val); err != nil {
 				return err
 			}
 		}
