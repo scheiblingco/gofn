@@ -55,13 +55,7 @@ func IsNumericType(v interface{}) bool {
 
 func IsStringlikeType(v interface{}) bool {
 	switch v.(type) {
-	case []byte:
-		return true
-	case []rune:
-		return true
-	case byte:
-		return true
-	case rune:
+	case []byte, []rune, byte, rune:
 		return true
 	}
 
@@ -115,21 +109,11 @@ func EnsureInt64(v interface{}) int64 {
 	}
 
 	switch v := v.(type) {
-	case int:
-	case int8:
-	case int16:
-	case int32:
-	case int64:
+	case int, int8, int16, int32, int64:
 		return reflect.ValueOf(v).Int()
-	case uint:
-	case uintptr:
-	case uint8:
-	case uint16:
-	case uint32:
-	case uint64:
+	case uint, uintptr, uint8, uint16, uint32, uint64:
 		return int64(reflect.ValueOf(v).Uint())
-	case float32:
-	case float64:
+	case float32, float64:
 		return int64(reflect.ValueOf(v).Float())
 	}
 
@@ -193,24 +177,14 @@ func EnsureUint64(v interface{}) uint64 {
 	}
 
 	switch v := v.(type) {
-	case int:
-	case int8:
-	case int16:
-	case int32:
-	case int64:
+	case int, int8, int32, int64:
 		if reflect.ValueOf(v).Int() < 0 {
 			return 0
 		}
 		return uint64(reflect.ValueOf(v).Int())
-	case uint:
-	case uintptr:
-	case uint8:
-	case uint16:
-	case uint32:
-	case uint64:
+	case uint, uintptr, uint8, uint16, uint32, uint64:
 		return uint64(reflect.ValueOf(v).Uint())
-	case float32:
-	case float64:
+	case float32, float64:
 		if reflect.ValueOf(v).Float() < 0 {
 			return 0
 		}
@@ -266,8 +240,12 @@ func EnsureString(v interface{}) string {
 	}
 
 	switch v := v.(type) {
+	case bool:
+		return strconv.FormatBool(v)
 	case string:
+		return v
 	case []byte:
+		return string(v)
 	case []rune:
 		return string(v)
 	}
@@ -276,31 +254,49 @@ func EnsureString(v interface{}) string {
 }
 
 func EnsureBool(v interface{}) bool {
+	if IsStringlikeType(v) {
+		sureString := EnsureString(v)
+
+		parse, err := strconv.ParseBool(sureString)
+		if err != nil {
+			return false
+		}
+
+		return parse
+	}
+
 	switch v := v.(type) {
 	case bool:
 		return v
-	case byte:
-	case int:
-	case int64:
-	case uint32:
-	case uint64:
-	case float32:
-	case float64:
+	case byte, int, int64, uint32, uint64, float32, float64:
 		return v != 0
 	}
 	return false
 }
 
 func EnsureFloat64(v interface{}) float64 {
+	if IsStringlikeType(v) {
+		sureString := EnsureString(v)
+
+		parse, err := strconv.ParseFloat(sureString, 64)
+		if err != nil {
+			return 0
+		}
+
+		return parse
+	}
+
+	if !IsNumericType(v) {
+		return 0
+	}
+
 	switch v := v.(type) {
-	case float64:
-		return v
-	case float32:
-	case int:
-	case int64:
-	case uint32:
-	case uint64:
-		return float64(v)
+	case int, int8, int32, int64:
+		return float64(reflect.ValueOf(v).Int())
+	case uint, uint8, uint16, uint32, uint64:
+		return float64(reflect.ValueOf(v).Uint())
+	case float32, float64:
+		return reflect.ValueOf(v).Float()
 	}
 
 	return 0
