@@ -236,7 +236,7 @@ func EnsureUint(v interface{}) uint {
 
 func EnsureString(v interface{}) string {
 	if IsNumericType(v) {
-		return fmt.Sprintf("%d", v)
+		return fmt.Sprintf("%v", v)
 	}
 
 	switch v := v.(type) {
