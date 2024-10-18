@@ -118,3 +118,8 @@ func Interface(i interface{}) *interface{} {
 func Slice(s interface{}) *interface{} {
 	return &s
 }
+
+// Returns a pointer to any
+func Any[T any](t T) *T {
+	return &t
+}
